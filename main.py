@@ -2,17 +2,22 @@ import tkinter as tk
 
 root = tk.Tk(screenName="Digit Recogniser GUI", baseName=None, className='Tk', useTk=1)
 root.title("Digit Recognizer")
-root.geometry("300x300")
+root.geometry("300x320")
 
 def paint_on_canvas(event):
-    x0,y0,x1,y1 = (event.x),(event.y),(event.x+1),(event.y+1)
+    x0,y0 = int(event.x//SCALE),int(event.y//SCALE)
     color = "#000000"
-    canvas.create_line(x0,y0,x1,y1, fill=color)
+    if (0 <= x0 < 28) and (0 <= y0 < 28):
+        canvas.create_rectangle((x0*SCALE,y0*SCALE),(x0*SCALE+SCALE,y0*SCALE+SCALE), fill="#000000")
 
 def clear_canvas():
     canvas.delete('all')
 
-canvas = tk.Canvas(root, height=200, width=200, bg="white", highlightthickness=2, highlightbackground="red")
+MNIST_size = 28
+SCALE = 10
+CANVAS_SIZE = MNIST_size*SCALE
+
+canvas = tk.Canvas(root, height=CANVAS_SIZE, width=CANVAS_SIZE, bg="white", highlightthickness=2, highlightbackground="red")
 canvas.pack()
 canvas.bind("<Button-1>", paint_on_canvas)
 canvas.bind("<B1-Motion>", paint_on_canvas)
