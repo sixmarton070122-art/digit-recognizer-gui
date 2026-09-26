@@ -7,8 +7,8 @@ root.geometry("300x320")
 def paint_on_canvas(event):
     x0,y0 = int(event.x//SCALE),int(event.y//SCALE)
     color = "#000000"
-    if (0 <= x0 < 28) and (0 <= y0 < 28):
-        canvas.create_rectangle((x0*SCALE,y0*SCALE),(x0*SCALE+SCALE,y0*SCALE+SCALE), fill="#000000")
+    if (0 <= x0 < MNIST_size) and (0 <= y0 < MNIST_size):
+        canvas.create_rectangle((x0*SCALE,y0*SCALE),(x0*SCALE+SCALE,y0*SCALE+SCALE), fill="black", outline="black")
 
 def clear_canvas():
     canvas.delete('all')
