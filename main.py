@@ -1,6 +1,17 @@
 import tkinter as tk
-from PIL import Image
 import numpy as np
+import torch
+import model
+
+input_size = 28*28
+hidden_size = 64
+num_classes = 10
+digit_recogniser = model.DigitClassifier(input_size=input_size, hidden_size=hidden_size, num_classes=num_classes)
+
+model_name = "test.pth"
+digit_recogniser.load_state_dict(torch.load(f"models/{model_name}"))
+digit_recogniser.eval()
+
 
 
 root = tk.Tk(screenName="Digit Recogniser GUI", baseName=None, className='Tk', useTk=1)
@@ -28,6 +39,9 @@ def clean_on_canvas(event):
 def clear_canvas():
     canvas.delete('all')
 
+def predict_digit():
+    pass
+
 canvas = tk.Canvas(root, height=CANVAS_SIZE, width=CANVAS_SIZE, bg="white", highlightthickness=2, highlightbackground="red")
 canvas.pack(padx=5,pady=5)
 canvas.bind("<Button-1>", paint_on_canvas)
@@ -42,7 +56,7 @@ button_frame.pack(pady=10)
 clear_button = tk.Button(button_frame, text="Clear", width=12, command=clear_canvas)
 clear_button.pack(side="left", padx=5)
 
-predict_button = tk.Button(button_frame, text="Predict", width=12, command=get_canvas_as_pil)
+predict_button = tk.Button(button_frame, text="Predict", width=12)
 predict_button.pack(side="left", padx=5)
 
 root.mainloop()
