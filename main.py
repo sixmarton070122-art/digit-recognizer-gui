@@ -2,6 +2,7 @@ import tkinter as tk
 from PIL import Image
 import numpy as np
 
+
 root = tk.Tk(screenName="Digit Recogniser GUI", baseName=None, className='Tk', useTk=1)
 root.title("Digit Recognizer")
 
@@ -26,12 +27,6 @@ def clean_on_canvas(event):
 
 def clear_canvas():
     canvas.delete('all')
-
-def get_canvas_as_pil():
-    img = Image.fromarray(grid * 255)   # 0 → 0, 1 → 255
-    img = img.convert("L")
-    img.save("images/test.png")
-    return img
 
 canvas = tk.Canvas(root, height=CANVAS_SIZE, width=CANVAS_SIZE, bg="white", highlightthickness=2, highlightbackground="red")
 canvas.pack(padx=5,pady=5)
