@@ -17,6 +17,13 @@ def paint_on_canvas(event):
         canvas.create_rectangle((x0*SCALE,y0*SCALE),(x0*SCALE+SCALE,y0*SCALE+SCALE), fill=color, outline=color)
         grid[y0,x0] = 1
 
+def clean_on_canvas(event):
+    x0,y0 = int(event.x//SCALE),int(event.y//SCALE)
+    color = "white"
+    if (0 <= x0 < MNIST_SIZE) and (0 <= y0 < MNIST_SIZE):
+        canvas.create_rectangle((x0*SCALE,y0*SCALE),(x0*SCALE+SCALE,y0*SCALE+SCALE), fill=color, outline=color)
+        grid[y0,x0] = 0
+
 def clear_canvas():
     canvas.delete('all')
 
@@ -30,6 +37,9 @@ canvas = tk.Canvas(root, height=CANVAS_SIZE, width=CANVAS_SIZE, bg="white", high
 canvas.pack(padx=5,pady=5)
 canvas.bind("<Button-1>", paint_on_canvas)
 canvas.bind("<B1-Motion>", paint_on_canvas)
+canvas.bind("<Button-3>", clean_on_canvas)
+canvas.bind("<B3-Motion>", clean_on_canvas)
+
 
 button_frame = tk.Frame(root)
 button_frame.pack(pady=10)
