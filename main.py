@@ -13,7 +13,6 @@ digit_recogniser.load_state_dict(torch.load(f"models/{model_name}"))
 digit_recogniser.eval()
 
 
-
 root = tk.Tk(screenName="Digit Recogniser GUI", baseName=None, className='Tk', useTk=1)
 root.title("Digit Recognizer")
 
