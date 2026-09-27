@@ -59,8 +59,13 @@ def predict_digit():
 
     with torch.no_grad():
         predictions = digit_recogniser(image_tensor)
-        predicted_digit = predictions.argmax(dim=1)
-        print(f"The predicted digit is {int(predicted_digit)}")
+        predicted_digit = int(predictions.argmax(dim=1))
+        print(f"The predicted digit is {predicted_digit}")
+        prediction_text.config(state="normal")
+        prediction_text.delete("1.0", tk.END)
+        prediction_text.insert("1.0", f"The prediction is: {predicted_digit}")
+        prediction_text.tag_add("center", "1.0", "end")
+        prediction_text.config(state="disabled")
 
 
 canvas = tk.Canvas(root, height=CANVAS_SIZE, width=CANVAS_SIZE, bg="white", highlightthickness=2, highlightbackground="red")
@@ -70,6 +75,19 @@ canvas.bind("<B1-Motion>", paint_on_canvas)
 canvas.bind("<Button-3>", clean_on_canvas)
 canvas.bind("<B3-Motion>", clean_on_canvas)
 
+prediction_text = tk.Text(
+    root,
+    height=2,               # smaller height
+    width=30,               # smaller width
+    font=("Arial", 12)
+)
+prediction_text.pack(pady=10)
+
+# Center the text with a tag
+prediction_text.tag_configure("center", justify="center")
+prediction_text.insert("1.0", "Draw a digit and click Predict")
+prediction_text.tag_add("center", "1.0", "end")
+prediction_text.config(state="disabled")
 
 button_frame = tk.Frame(root)
 button_frame.pack(pady=10)
