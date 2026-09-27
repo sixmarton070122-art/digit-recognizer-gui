@@ -41,10 +41,11 @@ def paint_on_canvas(event):
 
 def clean_on_canvas(event):
     x0,y0 = int(event.x//SCALE),int(event.y//SCALE)
-    color = "white"
     if (0 <= x0 < MNIST_SIZE) and (0 <= y0 < MNIST_SIZE):
+        grid[y0, x0] = max(0, grid[y0, x0] - 0.1)
+        gray = int(255 * (1 - grid[y0, x0]))
+        color = f"#{gray:02x}{gray:02x}{gray:02x}"
         canvas.create_rectangle((x0*SCALE,y0*SCALE),(x0*SCALE+SCALE,y0*SCALE+SCALE), fill=color, outline=color)
-        grid[y0,x0] = 0
 
 #Clear canvas
 def clear_canvas():
