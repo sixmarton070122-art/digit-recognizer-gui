@@ -3,31 +3,36 @@ import numpy as np
 import torch
 import model
 
+#Model data
 input_size = 28*28
 hidden_size = 64
 num_classes = 10
 digit_recogniser = model.DigitClassifier(input_size=input_size, hidden_size=hidden_size, num_classes=num_classes)
 
+#Load Model
 model_name = "test.pth"
 digit_recogniser.load_state_dict(torch.load(f"models/{model_name}"))
 digit_recogniser.eval()
 
-
+#TK Root
 root = tk.Tk(screenName="Digit Recogniser GUI", baseName=None, className='Tk', useTk=1)
 root.title("Digit Recognizer")
 
+#MNIST and SCALE data
 MNIST_SIZE = 28
 SCALE = 10
 CANVAS_SIZE = MNIST_SIZE*SCALE
 grid = np.zeros((MNIST_SIZE, MNIST_SIZE), dtype=np.float32)
 
+#Paint on the canvas
 def paint_on_canvas(event):
+    #Get mouse coordinates
     x0,y0 = int(event.x//SCALE),int(event.y//SCALE)
     if 0 <= x0 < MNIST_SIZE and 0 <= y0 < MNIST_SIZE:
+        #Gets darker overtime
         grid[y0, x0] = min(1.0, grid[y0, x0] + 0.1)
         gray = int(255 * (1 - grid[y0, x0]))
         color = f"#{gray:02x}{gray:02x}{gray:02x}"
-
         canvas.create_rectangle(
             x0 * SCALE, y0 * SCALE,
             (x0 + 1) * SCALE, (y0 + 1) * SCALE,
@@ -41,10 +46,12 @@ def clean_on_canvas(event):
         canvas.create_rectangle((x0*SCALE,y0*SCALE),(x0*SCALE+SCALE,y0*SCALE+SCALE), fill=color, outline=color)
         grid[y0,x0] = 0
 
+#Clear canvas
 def clear_canvas():
     canvas.delete('all')
     grid.fill(0.0)
 
+#Predict the drawn digit
 def predict_digit():
     image_tensor = torch.from_numpy(grid).float()
     image_tensor = image_tensor.unsqueeze(0).unsqueeze(0)
