@@ -23,10 +23,16 @@ grid = np.zeros((MNIST_SIZE, MNIST_SIZE), dtype=np.float32)
 
 def paint_on_canvas(event):
     x0,y0 = int(event.x//SCALE),int(event.y//SCALE)
-    color = "black"
-    if (0 <= x0 < MNIST_SIZE) and (0 <= y0 < MNIST_SIZE):
-        canvas.create_rectangle((x0*SCALE,y0*SCALE),(x0*SCALE+SCALE,y0*SCALE+SCALE), fill=color, outline=color)
-        grid[y0,x0] = 1
+    if 0 <= x0 < MNIST_SIZE and 0 <= y0 < MNIST_SIZE:
+        grid[y0, x0] = min(1.0, grid[y0, x0] + 0.2)
+        gray = int(255 * (1 - grid[y0, x0]))
+        color = f"#{gray:02x}{gray:02x}{gray:02x}"
+
+        canvas.create_rectangle(
+            x0 * SCALE, y0 * SCALE,
+            (x0 + 1) * SCALE, (y0 + 1) * SCALE,
+            fill=color, outline=color
+        )
 
 def clean_on_canvas(event):
     x0,y0 = int(event.x//SCALE),int(event.y//SCALE)
@@ -37,6 +43,7 @@ def clean_on_canvas(event):
 
 def clear_canvas():
     canvas.delete('all')
+    grid.fill(0.0)
 
 def predict_digit():
     image_tensor = torch.from_numpy(grid).float()
