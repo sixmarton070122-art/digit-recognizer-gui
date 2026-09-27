@@ -24,7 +24,7 @@ grid = np.zeros((MNIST_SIZE, MNIST_SIZE), dtype=np.float32)
 def paint_on_canvas(event):
     x0,y0 = int(event.x//SCALE),int(event.y//SCALE)
     if 0 <= x0 < MNIST_SIZE and 0 <= y0 < MNIST_SIZE:
-        grid[y0, x0] = min(1.0, grid[y0, x0] + 0.2)
+        grid[y0, x0] = min(1.0, grid[y0, x0] + 0.1)
         gray = int(255 * (1 - grid[y0, x0]))
         color = f"#{gray:02x}{gray:02x}{gray:02x}"
 
