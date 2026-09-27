@@ -10,7 +10,7 @@ num_classes = 10
 digit_recogniser = model.DigitClassifier(input_size=input_size, hidden_size=hidden_size, num_classes=num_classes)
 
 #Load Model
-model_name = "test.pth"
+model_name = "test_maxp.pth"
 digit_recogniser.load_state_dict(torch.load(f"models/{model_name}"))
 digit_recogniser.eval()
 
