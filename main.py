@@ -39,6 +39,7 @@ def paint_on_canvas(event):
             fill=color, outline=color
         )
 
+#Clean canvas
 def clean_on_canvas(event):
     x0,y0 = int(event.x//SCALE),int(event.y//SCALE)
     if (0 <= x0 < MNIST_SIZE) and (0 <= y0 < MNIST_SIZE):
@@ -75,20 +76,22 @@ canvas.bind("<B1-Motion>", paint_on_canvas)
 canvas.bind("<Button-3>", clean_on_canvas)
 canvas.bind("<B3-Motion>", clean_on_canvas)
 
+#Prediction prompt
 prediction_text = tk.Text(
     root,
-    height=2,               # smaller height
-    width=30,               # smaller width
+    height=2,
+    width=30,
     font=("Arial", 12)
 )
 prediction_text.pack(pady=10)
 
-# Center the text with a tag
+#CENTER
 prediction_text.tag_configure("center", justify="center")
 prediction_text.insert("1.0", "Draw a digit and click Predict")
 prediction_text.tag_add("center", "1.0", "end")
 prediction_text.config(state="disabled")
 
+#BUTTONS
 button_frame = tk.Frame(root)
 button_frame.pack(pady=10)
 
@@ -98,4 +101,5 @@ clear_button.pack(side="left", padx=5)
 predict_button = tk.Button(button_frame, text="Predict", width=12, command=predict_digit)
 predict_button.pack(side="left", padx=5)
 
+#MAIN
 root.mainloop()
